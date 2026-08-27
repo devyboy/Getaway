@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: getaway
+  datasource:
+    url: jdbc:postgresql://localhost:5432/getaway
+    username: getaway
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: create
