@@ -17,6 +17,10 @@ public class TripService {
         return tripRepository.findAll();
     }
 
+    public Trip getTripById(Long id) {
+        return tripRepository.getReferenceById(id);
+    }
+
     public Trip postTrip(CreateTripRequest request) {
         Trip trip = new Trip(
                 request.name(),

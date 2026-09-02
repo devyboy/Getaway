@@ -37,6 +37,18 @@ public class Trip {
         return name;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return created_at;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updated_at;
+    }
+
     public String getDestination() {
         return destination;
     }
