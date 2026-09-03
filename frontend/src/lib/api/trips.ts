@@ -20,8 +20,12 @@ export async function getTrips(): Promise<Trip[]> {
     return response.json()
 }
 
-export async function getTripById(id: String): Promise<Trip> {
+export async function getTripById(id: string): Promise<Trip | null> {
     const response = await fetch(`${API_URL}/trips/${id}`)
+
+    if (response.status === 404) {
+        return null
+    }
 
     if (!response.ok) {
         throw new Error("Failed to fetch trip")

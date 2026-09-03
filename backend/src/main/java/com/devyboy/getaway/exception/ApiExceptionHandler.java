@@ -15,10 +15,19 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<String> handleDatabaseError(DataAccessException exception) {
-        logger.error("Database operation failed", exception);
+        logger.error("Database operation failed: {}", exception);
 
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Database operation failed");
+    }
+
+    @ExceptionHandler(TripNotFoundException.class)
+    public ResponseEntity<String> handleTripNotFoundError(TripNotFoundException exception) {
+        logger.error("Trip not found: {}", exception.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(exception.getMessage());
     }
 }
