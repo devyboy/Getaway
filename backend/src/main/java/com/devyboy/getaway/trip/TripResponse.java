@@ -1,7 +1,7 @@
 package com.devyboy.getaway.trip;
 
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public record TripResponse(
         Long id,
@@ -9,8 +9,8 @@ public record TripResponse(
         LocalDate startDate,
         LocalDate endDate,
         String destination,
-        LocalDateTime created_at,
-        LocalDateTime updated_at) {
+        Instant createdAt,
+        Instant updatedAt) {
 
     public static TripResponse from(Trip trip) {
         return new TripResponse(

@@ -1,14 +1,20 @@
 package com.devyboy.getaway.trip;
 
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import com.devyboy.getaway.user.User;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "trips")
 public class Trip {
 
     @Id
@@ -18,8 +24,12 @@ public class Trip {
     private LocalDate startDate;
     private LocalDate endDate;
     private String destination;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private Instant createdAt;
+    private Instant updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     protected Trip() {
     }
@@ -29,8 +39,8 @@ public class Trip {
         this.startDate = startDate;
         this.endDate = endDate;
         this.destination = destination;
-        this.created_at = LocalDateTime.now();
-        this.updated_at = LocalDateTime.now();
+        this.createdAt = Instant.now();
+        this.updatedAt = Instant.now();
     }
 
     public String getName() {
@@ -41,12 +51,12 @@ public class Trip {
         return id;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return created_at;
+    public Instant getCreatedAt() {
+        return createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updated_at;
+    public Instant getUpdatedAt() {
+        return updatedAt;
     }
 
     public String getDestination() {
@@ -59,5 +69,9 @@ public class Trip {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public User getUser() {
+        return user;
     }
 }
