@@ -6,5 +6,6 @@ public record CreateTripRequest(
         String name,
         LocalDate startDate,
         LocalDate endDate,
-        String destination) {
+        String destination
+) {
 }

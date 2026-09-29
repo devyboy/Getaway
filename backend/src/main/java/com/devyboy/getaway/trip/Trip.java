@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import com.devyboy.getaway.user.User;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,8 +28,8 @@ public class Trip {
     private Instant createdAt;
     private Instant updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 
     protected Trip() {

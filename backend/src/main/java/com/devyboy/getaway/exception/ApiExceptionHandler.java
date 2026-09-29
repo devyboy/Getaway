@@ -2,6 +2,7 @@ package com.devyboy.getaway.exception;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -23,11 +24,17 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(TripNotFoundException.class)
-    public ResponseEntity<String> handleTripNotFoundError(TripNotFoundException exception) {
-        logger.error("Trip not found: {}", exception.getMessage());
+    public ProblemDetail handleTripNotFoundError(TripNotFoundException exception) {
+        logger.warn("Trip not found: {}", exception);
 
-        return ResponseEntity
-                .status(HttpStatus.NOT_FOUND)
-                .body(exception.getMessage());
+        return ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, exception.getMessage());
     }
+
+    @ExceptionHandler(AccountAlreadyExistsException.class)
+    public ProblemDetail handleDuplicateEmailError(AccountAlreadyExistsException exception) {
+        logger.warn("Duplicate email: {}", exception);
+
+        return ProblemDetail.forStatusAndDetail(HttpStatus.CONFLICT, exception.getMessage());
+    }
+
 }
