@@ -1,6 +1,8 @@
 package com.devyboy.getaway.auth;
 
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,10 +13,14 @@ import com.devyboy.getaway.user.User;
 public class AuthService {
 
     private final AuthRepository authRepository;
-    private final PasswordEncoder passwordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
-    public AuthService(AuthRepository authRepository) {
+    public AuthService(AuthRepository authRepository, PasswordEncoder passwordEncoder,
+            AuthenticationManager authenticationManager) {
         this.authRepository = authRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     public User register(AuthRequest request) {
@@ -33,7 +39,10 @@ public class AuthService {
         return user;
     }
 
-    public User login(AuthRequest request) {
-        return new User(request.email(), request.password());
+    public Authentication login(AuthRequest request) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(request.email(),
+                request.password());
+
+        return authenticationManager.authenticate(authToken);
     }
 }
