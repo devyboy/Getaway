@@ -3,7 +3,10 @@ package com.devyboy.getaway.auth;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Service;
 
 import com.devyboy.getaway.exception.AccountAlreadyExistsException;
@@ -44,5 +47,6 @@ public class AuthService {
                 request.password());
 
         return authenticationManager.authenticate(authToken);
+
     }
 }
