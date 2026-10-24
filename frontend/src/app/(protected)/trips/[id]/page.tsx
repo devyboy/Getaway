@@ -1,63 +1,63 @@
-"use client";
+'use client'
 
-import { getTripById, type Trip } from "@/lib/api/trips";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { getTripById, type Trip } from '@/lib/api/trips'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function Page() {
-    const { id } = useParams<{ id: string }>();
-    const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
-    const [trip, setTrip] = useState<Trip | null>(null);
+    const { id } = useParams<{ id: string }>()
+    const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
+    const [trip, setTrip] = useState<Trip | null>(null)
 
     useEffect(() => {
-        let isMounted = true;
+        let isMounted = true
 
         async function loadTrip() {
             try {
-                const data = await getTripById(id);
+                const data = await getTripById(id)
                 if (isMounted) {
-                    setTrip(data);
-                    setStatus("success");
+                    setTrip(data)
+                    setStatus('success')
                 }
             } catch {
                 if (isMounted) {
-                    setStatus("error");
+                    setStatus('error')
                 }
             }
         }
 
-        loadTrip();
+        loadTrip()
 
         return () => {
-            isMounted = false;
-        };
-    }, [id]);
+            isMounted = false
+        }
+    }, [id])
 
-    if (status === "loading") {
-        return <p>Loading trip...</p>;
+    if (status === 'loading') {
+        return <p>Loading trip...</p>
     }
 
-    if (status === "error") {
+    if (status === 'error') {
         return (
             <>
                 <h1>Could not load this trip</h1>
-                <Link className="text-purple-500" href="/trips">
+                <Link className='text-purple-500' href='/trips'>
                     Back to trips
                 </Link>
             </>
-        );
+        )
     }
 
     if (trip === null) {
         return (
             <>
                 <h1>Trip not found</h1>
-                <Link className="text-purple-500" href="/trips">
+                <Link className='text-purple-500' href='/trips'>
                     Back to trips
                 </Link>
             </>
-        );
+        )
     }
 
     return (
@@ -67,5 +67,5 @@ export default function Page() {
             <p>Start: {trip.startDate}</p>
             <p>End: {trip.endDate}</p>
         </>
-    );
+    )
 }
